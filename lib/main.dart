@@ -1,3 +1,4 @@
+// ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,9 +18,34 @@ class HomePage extends StatelessWidget {
         title: Text("Awesome App"),
       ),
       body: Container(
-          child: Center(
-        child: Text("Hi Flutter"),
-      )),
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        color: Colors.white,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(9),
+              width: 100,
+              height: 100,
+              color: Colors.red,
+            ),
+            Container(
+              padding: const EdgeInsets.all(9),
+              width: 100,
+              height: 100,
+              color: Colors.green,
+            ),
+            Container(
+              padding: const EdgeInsets.all(9),
+              width: 100,
+              height: 100,
+              color: Colors.yellow,
+            )
+          ],
+        ),
+      ),
     );
   }
 }
