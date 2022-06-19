@@ -1,6 +1,8 @@
-import 'package:awesome_app/change_name_card.dart';
+// ignore_for_file: prefer_const_constructors
 import 'package:awesome_app/drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -12,10 +14,19 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final TextEditingController _nameController = TextEditingController();
   var myText = "Change Me";
+  var url = "https://jsonplaceholder.typicode.com/photos";
+  var data;
 
   @override
   void initState() {
     super.initState();
+    getData();
+  }
+
+  getData() async {
+    var res = await http.get(Uri.parse(url));
+    data = jsonDecode(res.body);
+    setState(() {});
   }
 
   @override
@@ -27,11 +38,23 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Card(
-            child: ChangeNameCard(myText: myText, nameController: _nameController),
-          ),
-        ),
+        child: data != null
+            ? ListView.builder(
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ListTile(
+                    title: Text(data[index]["title"]),
+                    subtitle: Text("ID: ${data[index]["id"]}"),
+                    leading: Image.network(data[index]["url"]),
+                  ),
+                );
+              },
+              itemCount: data.length,
+            )
+            : Center(
+                child: CircularProgressIndicator(),
+              ),
       ),
       drawer: const MyDrawer(),
       floatingActionButton: FloatingActionButton(
