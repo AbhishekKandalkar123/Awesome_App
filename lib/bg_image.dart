@@ -8,6 +8,8 @@ class BgImage extends StatelessWidget {
     return Image.asset(
       "assets/dev.webp",
       fit: BoxFit.cover,
+      color: Colors.black.withOpacity(0.6),
+      colorBlendMode: BlendMode.darken,
     );
   }
 }
