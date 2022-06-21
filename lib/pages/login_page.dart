@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:awesome_app/bg_image.dart';
-import 'package:awesome_app/pages/home_page.dart';
+import 'package:awesome_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -66,8 +66,8 @@ class _LoginPageState extends State<LoginPage> {
                               //     context,
                               //     MaterialPageRoute(
                               //         builder: (context) => HomePage()));
-
-                              Navigator.pushNamed(context, "/home");
+                              Constants.prefs?.setBool("loggedIn", true);
+                              Navigator.pushReplacementNamed(context, "/home");
                             },
                             color: Colors.orange,
                             textColor: Colors.white,

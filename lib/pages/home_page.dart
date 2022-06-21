@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:awesome_app/drawer.dart';
+import 'package:awesome_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -35,23 +36,32 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
         title: const Text("Awesome App"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Constants.prefs?.setBool("loggedIn", false);
+              Navigator.pushReplacementNamed(context, "/login");
+            },
+            icon: Icon(Icons.logout),
+          )
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: data != null
             ? ListView.builder(
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: ListTile(
-                    title: Text(data[index]["title"]),
-                    subtitle: Text("ID: ${data[index]["id"]}"),
-                    leading: Image.network(data[index]["url"]),
-                  ),
-                );
-              },
-              itemCount: data.length,
-            )
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: ListTile(
+                      title: Text(data[index]["title"]),
+                      subtitle: Text("ID: ${data[index]["id"]}"),
+                      leading: Image.network(data[index]["url"]),
+                    ),
+                  );
+                },
+                itemCount: data.length,
+              )
             : Center(
                 child: CircularProgressIndicator(),
               ),
